@@ -5,7 +5,7 @@ botaoPalavras.addEventListener('click', mostraPalavrasChave);
 function mostraPalavrasChave() {
     const text = document.querySelector('#entrada-de-texto').value;
     const resultado = document.querySelector('#resultado-palavrachave');
-    const keyword = processaTexto(texto);
+    const keyword = processaTexto(text);
 
     resultado.textContent = keyword.join(", ");
 }
