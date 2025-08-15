@@ -1,14 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --cor-destaque: #ED145B;
-    --cor-gradiente-preto: linear-gradient(113deg, #000 0%, #1E2021 44.96%, #1E2022 100%);
+    --cor-destaque: #00F5FF;
+    --cor-secundaria: #8B5FBF;
+    --cor-acento: #FF6B9D;
+    --cor-gradiente: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #8b5fbf 100%);
+    --cor-texto-claro: #E8F4FD;
+    --cor-fundo-input: rgba(255, 255, 255, 0.95);
+    --cor-sombra: rgba(0, 245, 255, 0.3);
 }
 
 * {
     margin: 0;
     padding: 0;
-    font-family: Montserrat;
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
 }
 
 body {
@@ -16,72 +22,228 @@ body {
     justify-content: center;
     align-items: center;
     padding: 16px 21px 18px 21px;
-    background: var(--cor-gradiente-preto);
-    height: 100vh;
+    background: var(--cor-gradiente);
+    min-height: 100vh;
     flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
 }
 
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(139, 95, 191, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 245, 255, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
 
 .container {
     display: flex;
-    width: 65rem;
+    width: min(65rem, 95vw);
     flex-direction: column;
     align-items: center;
     gap: 3rem;
     overflow: hidden;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(0, 245, 255, 0.1);
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
     color: var(--cor-destaque);
     text-align: center;
-    font-size: 2.8rem;
-    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 700;
     text-transform: uppercase;
+    text-shadow: 0 0 20px var(--cor-sombra);
+    letter-spacing: 2px;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--cor-destaque), transparent);
+    border-radius: 2px;
 }
 
 #entrada-de-texto {
     display: flex;
-    height: 12rem;
-    padding: 1.4rem 2.5rem 2.5rem 2.5rem;
+    min-height: 12rem;
+    padding: 1.5rem 2.5rem;
     align-items: flex-start;
     gap: 0.625rem;
     align-self: stretch;
-    border-radius: 0.625rem;
-    background: #FFF;
-    font-size: 2rem;
+    border-radius: 1rem;
+    background: var(--cor-fundo-input);
+    font-size: 1.8rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    resize: vertical;
+}
+
+#entrada-de-texto:focus {
+    outline: none;
+    border: 2px solid var(--cor-destaque);
+    box-shadow: 0 0 25px var(--cor-sombra), 0 8px 32px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
 #entrada-de-texto::placeholder {
-    color: #828282;
-    font-size: 2rem;
+    color: #666;
+    font-size: 1.8rem;
     font-weight: 400;
     line-height: normal;
 }
 
 #botao-palavrachave {
     display: flex;
-    padding: 1.25rem;
+    padding: 1.25rem 2rem;
     justify-content: center;
     align-items: center;
     gap: 0.625rem;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     border: none;
-    background: var(--cor-destaque);
+    background: linear-gradient(135deg, var(--cor-destaque) 0%, var(--cor-secundaria) 100%);
     color: #000;
-    font-size: 2.5rem;
-    font-weight: 500;
+    font-size: 2rem;
+    font-weight: 600;
     line-height: normal;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 25px rgba(0, 245, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+#botao-palavrachave::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+#botao-palavrachave:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 245, 255, 0.6);
+}
+
+#botao-palavrachave:hover::before {
+    left: 100%;
+}
+
+#botao-palavrachave:active {
+    transform: translateY(-1px);
 }
 
 #resultado-palavrachave {
     display: flex;
-    border-radius: 0.625rem;
+    border-radius: 1rem;
     align-self: stretch;
-    color: var(--cor-destaque);
-    font-size: 2.5rem;
+    color: var(--cor-texto-claro);
+    font-size: 2rem;
     justify-content: center;
     margin-bottom: 2rem;
     max-width: 100%;
     max-height: 50vh;
     overflow: auto;
+    padding: 2rem;
+    background: rgba(0, 245, 255, 0.05);
+    border: 1px solid rgba(0, 245, 255, 0.2);
+    backdrop-filter: blur(15px);
+    line-height: 1.6;
+    text-align: center;
+    box-shadow: inset 0 0 20px rgba(0, 245, 255, 0.1);
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#resultado-palavrachave::-webkit-scrollbar {
+    width: 8px;
+}
+
+#resultado-palavrachave::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+#resultado-palavrachave::-webkit-scrollbar-thumb {
+    background: var(--cor-destaque);
+    border-radius: 4px;
+    opacity: 0.7;
+}
+
+#resultado-palavrachave::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
+}
+
+/* Responsividade aprimorada */
+@media (max-width: 768px) {
+    .container {
+        width: 95vw;
+        padding: 1.5rem;
+        gap: 2rem;
+    }
+    
+    #entrada-de-texto {
+        font-size: 1.5rem;
+        min-height: 10rem;
+        padding: 1.2rem 1.8rem;
+    }
+    
+    #entrada-de-texto::placeholder {
+        font-size: 1.5rem;
+    }
+    
+    #botao-palavrachave {
+        font-size: 1.6rem;
+        padding: 1rem 1.5rem;
+    }
+    
+    #resultado-palavrachave {
+        font-size: 1.6rem;
+        padding: 1.5rem;
+    }
+}
+
+/* Animações adicionais */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Efeito de destaque nos resultados */
+#resultado-palavrachave:not(:empty) {
+    animation: fadeIn 0.5s ease-out;
 }
